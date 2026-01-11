@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Итоговый тест: Госзакупки и ЕИС (10 вопросов)</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --error-color: #e74c3c;
+            --bg-color: #f4f7f6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .question {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .question-text {
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .options {
+            list-style: none;
+            padding: 0;
+        }
+
+        .option {
+            margin: 8px 0;
+            padding: 12px;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #fff;
+        }
+
+        .option:hover {
+            background-color: #f0f8ff;
+            border-color: var(--accent-color);
+        }
+
+        .option.correct {
+            background-color: #d4edda !important;
+            border-color: var(--success-color);
+            color: #155724;
+        }
+
+        .option.wrong {
+            background-color: #f8d7da !important;
+            border-color: var(--error-color);
+            color: #721c24;
+        }
+
+        .hint-btn {
+            background: none;
+            border: none;
+            color: var(--accent-color);
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .hint-text {
+            display: none;
+            font-style: italic;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            padding: 5px;
+            background: #fdfdfd;
+        }
+
+        .rationale {
+            display: none;
+            margin-top: 10px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-left: 4px solid var(--accent-color);
+            font-size: 0.9em;
+        }
+
+        #result-box {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 30px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 12px;
+        }
+
+        button#submit-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button#submit-btn:hover {
+            background: #2980b9;
+        }
+
+        .progress {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Итоговый контроль: Менеджмент в ЕИС</h1>
+        <p style="text-align: center; color: #666;">Тема: Практика работы в ЕИС, анализ рисков и правовые изменения
+            2025-2026</p>
+
+        <div id="quiz"></div>
+
+        <button id="submit-btn" onclick="showResults()">Завершить тест и рассчитать балл</button>
+
+        <div id="result-box">
+            <h2 id="final-status">Результат: <span id="score"></span> / 10</h2>
+            <p id="feedback" style="font-size: 1.1em;"></p>
+            <button onclick="location.reload()"
+                style="background: white; color: var(--primary-color); padding: 10px 20px; border: none; border-radius: 5px; cursor:pointer; font-weight: bold;">Начать
+                заново</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            // --- ПЕРВЫЕ 5 ВОПРОСОВ (КЕЙСЫ) ---
+            {
+                q: "При рассмотрении жалобы на ТЗ, на чем в первую очередь фокусируется УФАС?",
+                options: [
+                    { text: "На инженерной безупречности расчетов", isCorrect: false, rationale: "УФАС проверяет законность процедуры, а не техническое совершенство." },
+                    { text: "На создании условий для честной конкуренции", isCorrect: true, rationale: "Главное — чтобы ТЗ не ограничивало круг участников незаконно." },
+                    { text: "На наличии у заказчика диплома инженера", isCorrect: false, rationale: "Закон не требует специального образования от составителя ТЗ." },
+                    { text: "На исправлении всех грамматических ошибок", isCorrect: false, rationale: "Опечатки важны только если они искажают суть закупки." }
+                ],
+                hint: "Помните: ФАС — это антимонопольный орган, а не строительная экспертиза."
+            },
+            {
+                q: "Почему в Самаре отклонили жалобы на единые цены в школьных столовых?",
+                options: [
+                    { text: "Школы имеют право на любую прибыль", isCorrect: false, rationale: "В соцсфере прибыль ограничена интересами граждан." },
+                    { text: "Социальное равенство детей выше права бизнеса на свободную цену", isCorrect: true, rationale: "Государство защищает стабильность в социально значимых сферах." },
+                    { text: "Поставщики не являются резидентами Самары", isCorrect: false, rationale: "Регион регистрации не влияет на право подачи жалобы." },
+                    { text: "Питание не регулируется законом 44-ФЗ", isCorrect: false, rationale: "Питание — одна из самых жестко регулируемых сфер в 44-ФЗ." }
+                ],
+                hint: "Социальный фактор часто перевешивает чисто коммерческие интересы."
+            },
+            {
+                q: "Что поможет избежать РНП при техническом сбое КЭП?",
+                options: [
+                    { text: "Удаление личного кабинета в ЕИС", isCorrect: false, rationale: "Это только усугубит ситуацию." },
+                    { text: "Документальное подтверждение готовности (складские остатки, звонки в техподдержку)", isCorrect: true, rationale: "Это доказывает вашу добросовестность и желание исполнить контракт." },
+                    { text: "Перекладывание вины на провайдера интернета без скриншотов", isCorrect: false, rationale: "Без цифровых доказательств слова к делу не пришьешь." },
+                    { text: "Письмо губернатору области", isCorrect: false, rationale: "УФАС — независимый федеральный орган, нужны факты по делу." }
+                ],
+                hint: "Ключ — доказательства ваших активных действий по подписанию."
+            },
+            {
+                q: "Срок поставки в 1 день для сложного ИТ-оборудования — это какой риск?",
+                options: [
+                    { text: "Административный", isCorrect: false, rationale: "Связано с нарушением порядка, а не физической возможности." },
+                    { text: "Исполнительский", isCorrect: true, rationale: "Физически невозможно успеть, что ведет к срыву и штрафам." },
+                    { text: "Финансовый", isCorrect: false, rationale: "Связано с неплатежами или банковскими гарантиями." },
+                    { text: "Риск изменения валютного курса", isCorrect: false, rationale: "Это внешний экономический риск." }
+                ],
+                hint: "Сможет ли ваш логист выполнить это условие?"
+            },
+            {
+                q: "Какой признак указывает на коррупционный сговор при публикации закупки?",
+                options: [
+                    { text: "Использование кода ОКПД2", isCorrect: false, rationale: "Это обязанность каждого заказчика." },
+                    { text: "Публикация в праздничную полночь с коротким сроком подачи", isCorrect: true, rationale: "Классический способ сделать закупку 'незаметной' для конкурентов." },
+                    { text: "Требование соответствия ГОСТу", isCorrect: false, rationale: "Это стандартное требование к качеству." },
+                    { text: "Аванс в размере 30%", isCorrect: false, rationale: "Авансирование разрешено законом." }
+                ],
+                hint: "Сговор часто прячется в манипуляциях со временем и вниманием."
+            },
+            // --- НОВЫЕ 5 ВОПРОСОВ (ИНСТРУМЕНТЫ И ЗАКОН) ---
+            {
+                q: "Как новичку в ЕИС эффективнее всего найти закупку без лишнего 'мусора'?",
+                options: [
+                    { text: "Искать только по названию (напр. 'стул')", isCorrect: false, rationale: "Будет слишком много лишних результатов." },
+                    { text: "Использовать классификатор ОКПД2", isCorrect: true, rationale: "Коды классификатора позволяют точно отфильтровать нужную категорию товаров." },
+                    { text: "Искать по фамилии директора заказчика", isCorrect: false, rationale: "В ЕИС поиск настроен по объектам и ИНН организаций." },
+                    { text: "Листать все страницы подряд", isCorrect: false, rationale: "Это неэффективная трата времени." }
+                ],
+                hint: "Цифровой код товара надежнее, чем его описание буквами."
+            },
+            {
+                q: "Что дает регистрация в ЕРУЗ (Единый реестр участников закупок)?",
+                options: [
+                    { text: "Бесплатный доступ ко всем частным тендерам", isCorrect: false, rationale: "ЕРУЗ касается только государственных и муниципальных закупок." },
+                    { text: "Автоматическую аккредитацию на всех федеральных электронных площадках", isCorrect: true, rationale: "Это 'единое окно' для входа на рынок госзаказа." },
+                    { text: "Скидку на налоги для малого бизнеса", isCorrect: false, rationale: "ЕРУЗ не связан с налоговыми льготами." },
+                    { text: "Право не использовать электронную подпись", isCorrect: false, rationale: "Подпись (КЭП) обязательна для всех действий." }
+                ],
+                hint: "ЕРУЗ — это ваш 'паспорт' в мире 44-ФЗ."
+            },
+            {
+                q: "Как в 2026 году изменились правила для малых закупок (до 600 тыс. руб.)?",
+                options: [
+                    { text: "Они полностью запрещены", isCorrect: false, rationale: "Напротив, их роль в 2026 году возросла." },
+                    { text: "Они переведены в формат 'Электронного магазина'", isCorrect: true, rationale: "Теперь малые закупки стали прозрачными и проходят в цифровом виде." },
+                    { text: "Их можно проводить только по телефону", isCorrect: false, rationale: "Телефонные закупки незаконны и не оставляют цифрового следа." },
+                    { text: "Для них не требуется договор", isCorrect: false, rationale: "Договор обязателен всегда, даже на 100 рублей." }
+                ],
+                hint: "Вспомните про тренд на цифровизацию малых объемов в Самаре."
+            },
+            {
+                q: "Какой инструмент в ЕИС позволяет проверить, вовремя ли заказчик платит по счетам?",
+                options: [
+                    { text: "Телефон доверия заказчика", isCorrect: false, rationale: "Информация может быть необъективной." },
+                    { text: "Реестр контрактов (раздел 'Исполнение')", isCorrect: true, rationale: "Там видны даты актов и даты реальных платежных поручений." },
+                    { text: "Главная страница сайта Госзакупок", isCorrect: false, rationale: "Там только общие новости." },
+                    { text: "Личный кабинет Госуслуг", isCorrect: false, rationale: "Там нет данных по чужим контрактам." }
+                ],
+                hint: "История прошлых побед и оплат — лучший маркер надежности."
+            },
+            {
+                q: "Что означает приоритет 'Национального режима' в закупках 2026 года?",
+                options: [
+                    { text: "Запрет на работу с поставщиками из других городов РФ", isCorrect: false, rationale: "Внутри РФ дискриминация по городам запрещена." },
+                    { text: "Обязательное отклонение иностранных товаров при наличии российских аналогов в реестрах", isCorrect: true, rationale: "Импортозамещение стало жестким правилом для многих категорий (ПО, мебель)." },
+                    { text: "Право заказчика покупать товар только у родственников", isCorrect: false, rationale: "Это конфликт интересов и коррупция." },
+                    { text: "Стипендии для студентов-поставщиков", isCorrect: false, rationale: "Это не относится к целям 44-ФЗ." }
+                ],
+                hint: "Защита внутреннего производителя — ключевой тренд последних лет."
+            }
+        ];
+
+        function renderQuiz() {
+            const quizContainer = document.getElementById('quiz');
+            quizData.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question';
+                qDiv.innerHTML = `
+            <div class="progress">Вопрос ${index + 1} из 10</div>
+            <div class="question-text">${item.q}</div>
+            <button class="hint-btn" onclick="toggleHint(${index})">Лайфхак / Подсказка</button>
+            <div id="hint-${index}" class="hint-text">${item.hint}</div>
+            <div class="options" id="options-${index}">
+                ${item.options.map((opt, i) => `
+                    <div class="option" onclick="selectOption(${index}, ${i}, this)">${opt.text}</div>
+                `).join('')}
+            </div>
+            <div id="rationale-${index}" class="rationale"></div>
+        `;
+                quizContainer.appendChild(qDiv);
+            });
+        }
+
+        function toggleHint(index) {
+            const hint = document.getElementById(`hint-${index}`);
+            hint.style.display = hint.style.display === 'block' ? 'none' : 'block';
+        }
+
+        let userAnswers = new Array(quizData.length).fill(null);
+
+        function selectOption(qIdx, oIdx, element) {
+            const optionsContainer = document.getElementById(`options-${qIdx}`);
+            const allOptions = optionsContainer.querySelectorAll('.option');
+
+            allOptions.forEach(opt => {
+                opt.classList.remove('correct', 'wrong');
+                opt.style.pointerEvents = 'none';
+            });
+
+            const isCorrect = quizData[qIdx].options[oIdx].isCorrect;
+            userAnswers[qIdx] = isCorrect;
+
+            if (isCorrect) {
+                element.classList.add('correct');
+            } else {
+                element.classList.add('wrong');
+                const correctIdx = quizData[qIdx].options.findIndex(o => o.isCorrect);
+                allOptions[correctIdx].classList.add('correct');
+            }
+
+            const rationaleBox = document.getElementById(`rationale-${qIdx}`);
+            rationaleBox.innerHTML = `<strong>Почему так:</strong> ${quizData[qIdx].options[oIdx].rationale}`;
+            rationaleBox.style.display = 'block';
+        }
+
+        function showResults() {
+            const score = userAnswers.filter(ans => ans === true).length;
+            const unanswered = userAnswers.filter(ans => ans === null).length;
+
+            if (unanswered > 0) {
+                alert("Пожалуйста, ответьте на все вопросы перед завершением!");
+                return;
+            }
+
+            document.getElementById('quiz').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'none';
+            const resultBox = document.getElementById('result-box');
+            resultBox.style.display = 'block';
+            document.getElementById('score').innerText = score;
+
+            let feedback = "";
+            if (score === 10) feedback = "Великолепно! Вы настоящий эксперт в контрактной системе. Можете смело идти на стажировку в контрактную службу Самары.";
+            else if (score >= 8) feedback = "Отличный результат! Вы хорошо понимаете инструменты ЕИС и законодательные тренды.";
+            else if (score >= 6) feedback = "Хороший уровень знаний, но будьте осторожны с техническими нюансами в ЕИС.";
+            else feedback = "Вам стоит еще раз изучить справочник пользователя ЕИС и кейсы УФАС. В закупках ошибки стоят дорого.";
+
+            document.getElementById('feedback').innerText = feedback;
+        }
+
+        renderQuiz();
+    </script>
+
+</body>
+
+</html>
